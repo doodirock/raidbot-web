@@ -12,7 +12,7 @@ var nunjucks = require('nunjucks');
 var passport = require('passport');
 
 // Load environment variables from .env file
-dotenv.load();
+//dotenv.load();
 
 // Controllers
 var HomeController = require('./controllers/home');
