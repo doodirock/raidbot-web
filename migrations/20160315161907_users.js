@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
       table.dateTime('when');
       table.integer('size');
       table.text('note');
-      table.json('raid_group').nullable();
+      table.integer('raid_group');
       table.timestamps();
     })    
   ]);
