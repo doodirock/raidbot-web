@@ -7,12 +7,8 @@ var session = require('express-session');
 var flash = require('express-flash');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
-var dotenv = require('dotenv');
 var nunjucks = require('nunjucks');
 var passport = require('passport');
-
-// Load environment variables from .env file
-//dotenv.load();
 
 // Controllers
 var HomeController = require('./controllers/home');
