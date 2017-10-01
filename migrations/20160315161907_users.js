@@ -17,7 +17,9 @@ exports.up = function(knex, Promise) {
       table.string('raid_group');
       table.integer('user_id')
         .references('uid')
-        .inTable('users');       
+        .inTable('users')
+        .onDelete('cascade')
+        .onUpdate('cascade');       
       table.timestamps();
     })    
   ]);
