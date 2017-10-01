@@ -1,25 +1,23 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', function(table) {
-      table.increments();
+      table.increments('uid').primary();
       table.string('user');
       table.bigInteger('discord_id');
-      table.string('avatar');
-      table.timestamps();
-    })
-    .createTable('guilds', function(table) {
-      table.increments();
-      table.string('gname');
-      table.string('gicon');
+      table.string('avatar');     
       table.timestamps();
     })
     .createTable('raids', function(table) {
-      table.increments();
+      table.increments('ruid').primary();
+      table.integer('guild_id');
       table.string('game');
       table.dateTime('when');
       table.integer('size');
       table.text('note');
-      table.integer('raid_group');
+      table.string('raid_group');
+      table.integer('user_id')
+        .references('uid')
+        .inTable('users');       
       table.timestamps();
     })    
   ]);
@@ -28,7 +26,6 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('users')
-    .dropTable('guilds')
     .dropTable('raids')
   ])
 };
