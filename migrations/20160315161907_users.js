@@ -17,6 +17,11 @@ exports.up = function(knex, Promise) {
       table.string('vk');
       table.timestamps();
     })
+    .createTable('guilds', function(table) {
+      table.increments();
+      table.string('gname');
+      table.timestamps();
+    })
   ]);
 };
 
