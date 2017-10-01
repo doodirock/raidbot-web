@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('users', function(table) {
       table.increments('uid').primary();
       table.string('user');
+      table.string('guilds');
       table.bigInteger('discord_id');
       table.string('avatar');     
       table.timestamps();
