@@ -37,7 +37,7 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(session({
   secret: 'I like a do da chacha',
-  store: new redisStore({ host: redisurl, port: 16523, pass: redispass, ttl: 604800}),
+  store: new redisStore({ host: process.env.REDISCLOUD_URL, port: 16523, pass: process.env.REDISCLOUD_PASS, ttl: 604800}),
   resave: false,
   saveUninitialized: false
 }));
