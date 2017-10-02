@@ -4,14 +4,63 @@ var LocalStrategy = require('passport-discord').Strategy;
 
 var User = require('../models/User');
 
+// passport.serializeUser(function(user, done) {
+//   done(null, user.id);
+// });
+// passport.deserializeUser(function(id, done) {
+//   new User({ id: id}).fetch().then(function(user) {
+//     done(null, user);
+//   });
+// });
+
+
+// Passport connection for login
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user);
 });
-passport.deserializeUser(function(id, done) {
-  new User({ id: id}).fetch().then(function(user) {
-    done(null, user);
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+var scopes = ['identify', 'guilds'];
+
+passport.use(new Strategy({
+  clientID: process.env.DISCORD_CLIENT,
+  clientSecret: process.env.DISCORD_SECRET,
+  callbackURL: 'http://www.raidbot.io/callback',
+  scope: scopes
+}, function(accessToken, refreshToken, profile, done) {
+var guilds = profile.guilds;
+User
+.findOrCreate({where: {userid: profile.id}, defaults: {
+  userid: profile.id,
+  user: profile.username,
+  avatar: profile.avatar
+}})
+.spread(function(profile, created) {
+  // console.log(created)
+})
+Promise.all(guilds.map(function(stuffs) {
+  // Do your thing
+  return Guild
+  .findOrCreate({where: {primid: stuffs.id}, defaults: {
+    primid: stuffs.id,
+    name: stuffs.name,
+    icon: stuffs.icon
+  }})
+  .spread(function(guild, created) {
+    // console.log(guild.get({
+    // plain: true
+    // }))
+    // console.log(created)
+  })			
+})).then(function() {
+  // All is resolved do your next thing
+})	
+  process.nextTick(function() {
+      return done(null, profile);
   });
-});
+}));
 
 // Sign in with Email and Password
 passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {

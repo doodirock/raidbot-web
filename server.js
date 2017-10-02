@@ -3,7 +3,9 @@ var path = require('path');
 var logger = require('morgan');
 var compression = require('compression');
 var methodOverride = require('method-override');
+var redis   = require("redis");
 var session = require('express-session');
+var redisStore = require('connect-redis')(session);
 var flash = require('express-flash');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
@@ -33,7 +35,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(methodOverride('_method'));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(session({
+  secret: 'I like a do da chacha',
+  store: new redisStore({ host: redisurl, port: 16523, pass: redispass, ttl: 604800}),
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
