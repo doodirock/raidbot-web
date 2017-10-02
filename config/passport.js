@@ -13,7 +13,6 @@ var User = require('../models/User');
 //   });
 // });
 
-
 // Passport connection for login
 passport.serializeUser(function(user, done) {
   done(null, user);
