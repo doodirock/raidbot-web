@@ -46,10 +46,11 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next) {
-  res.locals.user = req.user ? req.user.toJSON() : null;
-  next();
-});
+// Need to figure out how I want to handle requests to make sure user is logged in all all pages.
+// app.use(function(req, res, next) {
+//   res.locals.user = req.user ? req.user.toJSON() : null;
+//   next();
+// });
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
@@ -67,6 +68,10 @@ app.get('/callback',
 		res.redirect('/profile') 
 	} // auth success
 );
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 // app.get('/login', userController.loginGet);
 // app.post('/login', userController.loginPost);
 app.get('/forgot', userController.forgotGet);
