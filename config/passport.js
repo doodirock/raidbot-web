@@ -30,8 +30,7 @@ passport.use(new Strategy({
   scope: scopes
   }, 
   function(accessToken, refreshToken, profile, done) {
-    var guilds = profile.guilds;
-    console.log(profile);
+    //console.log(profile);
     // User
     // .findOrCreate({where: {userid: profile.id}, defaults: {
     //   userid: profile.id,

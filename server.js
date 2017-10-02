@@ -47,10 +47,11 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 // Need to figure out how I want to handle requests to make sure user is logged in all all pages.
-// app.use(function(req, res, next) {
-//   res.locals.user = req.user ? req.user.toJSON() : null;
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.locals.user = req.user ? JSON.stringify(req.user) : null;
+  console.log(res);
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
