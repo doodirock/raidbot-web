@@ -1,5 +1,5 @@
 var passport = require('passport');
-var LocalStrategy = require('passport-discord').Strategy;
+var Strategy = require('passport-discord').Strategy;
 
 
 var User = require('../models/User');
@@ -24,7 +24,7 @@ passport.deserializeUser(function(obj, done) {
 
 var scopes = ['identify', 'guilds'];
 
-passport.use(new LocalStrategy({
+passport.use(new Strategy({
   clientID: process.env.DISCORD_CLIENT,
   clientSecret: process.env.DISCORD_SECRET,
   callbackURL: 'http://www.raidbot.io/callback',
