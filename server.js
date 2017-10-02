@@ -68,10 +68,6 @@ app.get('/callback',
 		res.redirect('/profile') 
 	} // auth success
 );
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
 // app.get('/login', userController.loginGet);
 // app.post('/login', userController.loginPost);
 app.get('/forgot', userController.forgotGet);
