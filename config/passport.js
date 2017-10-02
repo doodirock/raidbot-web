@@ -29,36 +29,38 @@ passport.use(new Strategy({
   clientSecret: process.env.DISCORD_SECRET,
   callbackURL: 'http://www.raidbot.io/callback',
   scope: scopes
-}, function(accessToken, refreshToken, profile, done) {
-var guilds = profile.guilds;
-User
-.findOrCreate({where: {userid: profile.id}, defaults: {
-  userid: profile.id,
-  user: profile.username,
-  avatar: profile.avatar
-}})
-.spread(function(profile, created) {
-  console.log(created)
-})
-  process.nextTick(function() {
-      return done(null, profile);
-  });
-}));
+  }, 
+  function(accessToken, refreshToken, profile, done) {
+    var guilds = profile.guilds;
+    User
+    .findOrCreate({where: {userid: profile.id}, defaults: {
+      userid: profile.id,
+      user: profile.username,
+      avatar: profile.avatar
+    }})
+    .spread(function(profile, created) {
+      console.log(created)
+    })
+    process.nextTick(function() {
+        return done(null, profile);
+    });
+  })
+);
 
 // Sign in with Email and Password
-passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
-  new User({ email: email })
-    .fetch()
-    .then(function(user) {
-      if (!user) {
-        return done(null, false, { msg: 'The email address ' + email + ' is not associated with any account. ' +
-        'Double-check your email address and try again.' });
-      }
-      user.comparePassword(password, function(err, isMatch) {
-        if (!isMatch) {
-          return done(null, false, { msg: 'Invalid email or password' });
-        }
-        return done(null, user);
-      });
-    });
-}));
+// passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
+//   new User({ email: email })
+//     .fetch()
+//     .then(function(user) {
+//       if (!user) {
+//         return done(null, false, { msg: 'The email address ' + email + ' is not associated with any account. ' +
+//         'Double-check your email address and try again.' });
+//       }
+//       user.comparePassword(password, function(err, isMatch) {
+//         if (!isMatch) {
+//           return done(null, false, { msg: 'Invalid email or password' });
+//         }
+//         return done(null, user);
+//       });
+//     });
+// }));
