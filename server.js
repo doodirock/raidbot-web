@@ -20,6 +20,8 @@ var contactController = require('./controllers/contact');
 // Passport OAuth strategies
 require('./config/passport');
 
+var scopes = ['identify', 'guilds'];
+
 var app = express();
 
 // view engine setup
@@ -58,8 +60,15 @@ app.put('/account', userController.ensureAuthenticated, userController.accountPu
 app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
 app.get('/signup', userController.signupGet);
 app.post('/signup', userController.signupPost);
-app.get('/login', userController.loginGet);
-app.post('/login', userController.loginPost);
+// auth start
+app.get('/login', passport.authenticate('discord', { scope: scopes }), function(req, res) {});
+app.get('/callback',
+    passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) { 
+		res.redirect('/profile') 
+	} // auth success
+);
+// app.get('/login', userController.loginGet);
+// app.post('/login', userController.loginPost);
 app.get('/forgot', userController.forgotGet);
 app.post('/forgot', userController.forgotPost);
 app.get('/reset/:token', userController.resetGet);

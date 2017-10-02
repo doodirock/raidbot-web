@@ -31,15 +31,16 @@ passport.use(new Strategy({
   }, 
   function(accessToken, refreshToken, profile, done) {
     var guilds = profile.guilds;
-    User
-    .findOrCreate({where: {userid: profile.id}, defaults: {
-      userid: profile.id,
-      user: profile.username,
-      avatar: profile.avatar
-    }})
-    .spread(function(profile, created) {
-      console.log(created)
-    })
+    console.log(profile);
+    // User
+    // .findOrCreate({where: {userid: profile.id}, defaults: {
+    //   userid: profile.id,
+    //   user: profile.username,
+    //   avatar: profile.avatar
+    // }})
+    // .spread(function(profile, created) {
+    //   console.log(created)
+    // })
     process.nextTick(function() {
         return done(null, profile);
     });
