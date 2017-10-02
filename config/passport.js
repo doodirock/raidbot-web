@@ -24,7 +24,7 @@ passport.deserializeUser(function(obj, done) {
 
 var scopes = ['identify', 'guilds'];
 
-passport.use(new Strategy({
+passport.use(new LocalStrategy({
   clientID: process.env.DISCORD_CLIENT,
   clientSecret: process.env.DISCORD_SECRET,
   callbackURL: 'http://www.raidbot.io/callback',
