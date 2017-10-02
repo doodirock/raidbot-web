@@ -38,25 +38,8 @@ User
   avatar: profile.avatar
 }})
 .spread(function(profile, created) {
-  // console.log(created)
+  console.log(created)
 })
-Promise.all(guilds.map(function(stuffs) {
-  // Do your thing
-  return Guild
-  .findOrCreate({where: {primid: stuffs.id}, defaults: {
-    primid: stuffs.id,
-    name: stuffs.name,
-    icon: stuffs.icon
-  }})
-  .spread(function(guild, created) {
-    // console.log(guild.get({
-    // plain: true
-    // }))
-    // console.log(created)
-  })			
-})).then(function() {
-  // All is resolved do your next thing
-})	
   process.nextTick(function() {
       return done(null, profile);
   });
