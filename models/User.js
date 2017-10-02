@@ -1,6 +1,6 @@
 var Bookshelf = require('../config/bookshelf');
 
-require('./raids');
+require('./Raids');
 
 var User = Bookshelf.Model.extend({
   tableName: 'users',
